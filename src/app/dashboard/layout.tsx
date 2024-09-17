@@ -7,9 +7,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <section className="md:block hidden w-full flex-none md:w-64">
         <Sidebar />
       </section>
-      <section className="w-full">
+      <section className="w-full overflow-y-auto">
         <CustomizedHeader />
-        <div className="flex-grow p-6 md:overflow-y-auto md:px-8 md:py-6 ">
+        <div className="flex-grow py-6 px-2 md:px-4 md:py-6 ">
           {children}
         </div>
       </section>
