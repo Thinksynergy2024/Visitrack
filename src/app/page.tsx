@@ -3,9 +3,12 @@ import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useState } from "react";
 import Link from "next/link";
+import { useContext } from "react";
+import { authContext } from '../use-context'
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const { loginUser } = useContext(authContext);
 
   const initialValues = {
     username: "",
@@ -20,10 +23,10 @@ export default function Home() {
   const handleLogin = async (formValue: any, helpers: any) => {
     try {
       setLoading(true);
-      // await loginUser(formValue.username, formValue.password).then((res) => {
-      //   helpers.resetForm();
-      //   setLoading(false);
-      // });
+      await loginUser(formValue.username, formValue.password).then((res: any) => {
+        helpers.resetForm();
+        setLoading(false);
+      });
     } catch (err) {
       setLoading(false);
     }
@@ -31,14 +34,14 @@ export default function Home() {
 
   return (
     <section className="bg-background h-screen">
-      <div className="flex items-center justify-center h-screen w-9/12 mx-auto">
-        <div className="w-1/2 shadow-xl relative text-white bg-gradient-to-t from-primary to-gradientFrom p-4 rounded-tl-xl rounded-bl-xl h-[70vh]">
+      <div className="flex items-center justify-center h-screen md:w-9/12 w-11/12 mx-auto">
+        <div className="md:block hidden w-1/2 shadow-xl relative text-white bg-gradient-to-t from-primary to-gradientFrom p-4 rounded-tl-xl rounded-bl-xl h-[70vh]">
           <div className="w-full">
             <h1 className="text-2xl font-bold absolute top-52 left-40">Visitrack</h1>
             <p className="text-sm absolute bottom-8 left-12">Transforming check-ins into memorable experiences.</p>
           </div>
         </div>
-        <div className="w-1/2 bg-white shadow-xl md:px-12 px-4 rounded-tr-xl rounded-br-xl h-[70vh] flex items-center justify-center">
+        <div className="md:w-1/2 w-full bg-white shadow-xl md:px-12 px-4 md:rounded-tr-xl md:rounded-br-xl h-[70vh] flex items-center justify-center">
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}

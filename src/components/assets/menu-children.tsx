@@ -21,7 +21,7 @@ const MenuChildren = () => {
         const icon = isOpen ? <IoChevronDownOutline /> : <IoChevronForward />;
 
         return (
-          <section>
+          <section key={index}>
             {!item.children ? (
               <section>
                 <Link

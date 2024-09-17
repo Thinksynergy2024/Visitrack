@@ -1,8 +1,9 @@
+"use client";
 import { useState, createContext, useEffect } from "react";
-import { APP_API_URL } from "@/assets/api-endpoints";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import UseAxios from "@/assets/hooks/use-axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { APP_API_URL } from "../components/assets/api-endpoints";
+import UseAxios from "../components/assets/hooks/use-axios";
 
 export const authContext = createContext();
 
@@ -19,10 +20,8 @@ export const AuthProvider = ({ children }) => {
       });
       if (response.data.status.status_text === "Success.") {
         const userInfo = response.data.user_info;
-
         localStorage.setItem("current_user", JSON.stringify(userInfo));
         setUser(userInfo);
-
         router.push("/dashboard");
       } else {
         toast.error(response.data.status.status_text);
@@ -32,8 +31,6 @@ export const AuthProvider = ({ children }) => {
       toast.error("An error occurred while processing your request");
     }
   };
-
- 
 
   const logoutUser = () => {
     setUser(null);
@@ -45,7 +42,6 @@ export const AuthProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
     user: user,
-  
   };
 
   // decode the token and set the user when a component mounts
