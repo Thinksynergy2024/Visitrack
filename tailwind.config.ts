@@ -14,7 +14,9 @@ const config: Config = {
       black: '#000000',
       gradientFrom: '#1F3D8E',
       gradientTo: '#3D76E4',
-      gray: '#E5E7EB'
+      gray: '#E5E7EB',
+      warning: '#FF3333',
+      link: '#0055CC',
     }
   },
   plugins: [],
