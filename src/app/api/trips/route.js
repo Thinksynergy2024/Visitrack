@@ -20,7 +20,7 @@ export async function POST(req) {
       },
     };
 
-    const response = await backendAxiosInstance.post(`${API_URL.LOGIN}`, payload, config);
+    const response = await backendAxiosInstance.post(`${API_URL.FETCH_TRIPS}`, payload, config);
 
     return new Response(JSON.stringify(response.data), {
       status: 200,

@@ -1,10 +1,11 @@
 "use client";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import './devextreme.css';
+import "./devextreme.css";
 import { AuthProvider } from "@/use-context";
 import "devextreme/dist/css/dx.material.blue.light.css";
-
+import { Provider } from "react-redux";
+import { store } from "../app/redux/store";
 
 export default function RootLayout({
   children,
@@ -24,10 +25,12 @@ export default function RootLayout({
         ></link>
       </head>
       <body>
-        <AuthProvider>
-          <Toaster position="top-center" />
-          {children}
-        </AuthProvider>
+        <Provider store={store}>
+          <AuthProvider>
+            <Toaster position="top-center" />
+            {children}
+          </AuthProvider>
+        </Provider>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Column,
   Paging,
@@ -7,15 +7,36 @@ import {
   HeaderFilter,
 } from "devextreme-react/data-grid";
 import dynamic from "next/dynamic";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTrips } from "../../redux/service/trips";
+import { setTrips } from "@/app/redux/features/trips";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
 
 const Trips = () => {
+  const { trips } = useSelector((store: any) => store.trip);
+  const dispatch = useDispatch();
+
+  const type = "trips";
+
+  const getAllTrips = async () => {
+    const res = await fetchTrips(type);
+    dispatch(setTrips(res));
+  };
+
+  useEffect(() => {
+    if (trips.length === 0) {
+      getAllTrips();
+    } else {
+    }
+  }, []);
+
   return (
     <div>
       <DataGrid
+        dataSource={trips}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
@@ -24,7 +45,7 @@ const Trips = () => {
         showRowLines={true}
         wordWrapEnabled={true}
         className="shadow-xl w-full"
-        // height={"70vh"}
+        height={"75vh"}
       >
         <HeaderFilter visible={true} />
         <Pager
@@ -35,10 +56,15 @@ const Trips = () => {
         />
         <Paging defaultPageSize={50} />
         <Column
-          dataField="organisation"
+          dataField="exitdatetime"
           caption="Organisation"
           allowFiltering={false}
           width={180}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.exitdatetime}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -55,11 +81,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckdonewithverification"
-          caption="Night Check Done"
+          dataField="drivername"
+          caption="Driver Name"
           width={180}
-          alignment="right"
+          alignment="left"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.drivername}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -76,11 +107,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckdonewithoutverification"
+          dataField="turnboy"
           caption="Night Check Done"
           width={180}
-          alignment="right"
+          alignment="left"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.turnboy}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -97,11 +133,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="regno"
           caption="Night Check Missed"
           width={180}
-          alignment="right"
+          alignment="left"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.regno}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -118,11 +159,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="exitmileage"
           caption="Night Check Missed"
           width={180}
-          alignment="right"
+          alignment="left"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.exitmileage}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -139,11 +185,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="destination"
           caption="Night Check Missed"
           width={180}
-          alignment="right"
+          alignment="left"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.destination}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -160,11 +211,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="sealnumber"
           caption="Night Check Missed"
           width={180}
           alignment="right"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.sealnumber}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -181,11 +237,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="noofboxes"
           caption="Night Check Missed"
           width={180}
           alignment="right"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.noofboxes}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -202,11 +263,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="entrymileage"
           caption="Night Check Missed"
           width={180}
           alignment="right"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.entrymileage}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -228,6 +294,11 @@ const Trips = () => {
           width={180}
           alignment="right"
           allowFiltering={false}
+          // cellRender={(rowData) => (
+          //   <div style={{ fontSize: "12px" }}>
+          //     {`${rowData.data.entrymileage}`}
+          //   </div>
+          // )}
           headerCellRender={() => (
             <div
               style={{
@@ -265,11 +336,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="exitnotes"
           caption="Night Check Missed"
           width={180}
           alignment="right"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.exitnotes}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -286,11 +362,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="entrydate"
           caption="Night Check Missed"
           width={180}
           alignment="right"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.entrydate}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -307,11 +388,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="entrytime"
           caption="Night Check Missed"
           width={180}
           alignment="right"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.entrytime}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{
@@ -328,11 +414,16 @@ const Trips = () => {
           )}
         />
         <Column
-          dataField="nightcheckmissed"
+          dataField="entrynotes"
           caption="Night Check Missed"
           width={180}
           alignment="right"
           allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.entrynotes}`}
+            </div>
+          )}
           headerCellRender={() => (
             <div
               style={{

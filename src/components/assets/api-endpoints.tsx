@@ -6,6 +6,8 @@ export const API_URL = {
     LOGIN: 'https://visitrack.thinksynergyltd.com/api1/rest/login.php',
     
 
+    /***************** TRIPS APIS **********************/
+    FETCH_TRIPS: 'https://visitrack.thinksynergyltd.com/api1/rest/get_trips.php'
 
    
 
@@ -17,6 +19,9 @@ export const APP_API_URL = {
 
     /***************** AUTH **********************/
     LOGIN: '/api/login',
+
+    /***************** TRIPS **********************/
+    FETCH_TRIPS: '/api/trips',
    
 }
 
