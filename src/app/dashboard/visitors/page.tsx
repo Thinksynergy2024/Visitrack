@@ -20,25 +20,16 @@ const Visitors = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
 
-  const handleClickOpen = () => {
-    setOpen(true);
+
+  const sanitizeJson = (jsonString: "") => {
+    return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove control characters
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-
-  const sanitizeJson = (jsonString: '') => {
-    return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, ''); // Remove control characters
-  };
-  
   const getAllVisitors = async () => {
     try {
       const res = await fetchVisits();
       const sanitizedResponse = sanitizeJson(res);
-      console.log("SANITIZED_RESPONSE ",sanitizedResponse);
-      
+
       // Attempt to parse the sanitized JSON string
       const visitorsData = JSON.parse(sanitizedResponse);
       dispatch(setVisitors(visitorsData));
@@ -135,7 +126,9 @@ const Visitors = () => {
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>{`${rowData.data.visitoridnumber}`}</div>
+            <div
+              style={{ fontSize: "12px" }}
+            >{`${rowData.data.visitoridnumber}`}</div>
           )}
           headerCellRender={() => (
             <div
@@ -159,7 +152,9 @@ const Visitors = () => {
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>{`${rowData.data.visitorstatus}`}</div>
+            <div
+              style={{ fontSize: "12px" }}
+            >{`${rowData.data.visitorstatus}`}</div>
           )}
           headerCellRender={() => (
             <div
@@ -313,9 +308,7 @@ const Visitors = () => {
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.activity}`}
-            </div>
+            <div style={{ fontSize: "12px" }}>{`${rowData.data.activity}`}</div>
           )}
           headerCellRender={() => (
             <div
@@ -339,9 +332,7 @@ const Visitors = () => {
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.location}`}
-            </div>
+            <div style={{ fontSize: "12px" }}>{`${rowData.data.location}`}</div>
           )}
           headerCellRender={() => (
             <div
@@ -417,9 +408,7 @@ const Visitors = () => {
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.status}`}
-            </div>
+            <div style={{ fontSize: "12px" }}>{`${rowData.data.status}`}</div>
           )}
           headerCellRender={() => (
             <div
@@ -469,9 +458,7 @@ const Visitors = () => {
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.priority}`}
-            </div>
+            <div style={{ fontSize: "12px" }}>{`${rowData.data.priority}`}</div>
           )}
           headerCellRender={() => (
             <div

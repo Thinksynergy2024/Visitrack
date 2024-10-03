@@ -48,6 +48,11 @@ const CustomizedHeader = () => {
         ) : (
           ""
         )}
+        {currentPath === "/dashboard/visitors/appointments" ? (
+          <h1 className="font-bold">Appointments</h1>
+        ) : (
+          ""
+        )}
       </div>
       <div>
       <div className="flex items-center gap-2">
