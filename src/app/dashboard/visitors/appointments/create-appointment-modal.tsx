@@ -5,7 +5,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { addAppointment } from "@/app/redux/service/visitors";
+import { addAppointment, fetchVisits } from "@/app/redux/service/visitors";
+import { setVisitors } from "@/app/redux/features/visitors";
 
 interface CreateAppointmentModalProps {
   open: boolean;
@@ -20,6 +21,24 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  const sanitizeJson = (jsonString: "") => {
+    return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove control characters
+  };
+
+  const getAllVisitors = async () => {
+    try {
+      const res = await fetchVisits();
+      const sanitizedResponse = sanitizeJson(res);
+
+      // Attempt to parse the sanitized JSON string
+      const visitorsData = JSON.parse(sanitizedResponse);
+      dispatch(setVisitors(visitorsData));
+    } catch (error) {
+      console.error("Failed to fetch visitors:", error);
+      // You can also display a user-friendly error message here
+    }
+  };
 
   const initialValues = {
     visitorname: "",
@@ -61,11 +80,19 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
         subject: "appointment",
         typeofvisit: "appointment",
         appointment: "1",
+        groupsize: "",
+        visitoritems: "",
+        visitorstatus: "",
+        visitoritemssno: "",
+        persontovisit: "",
+        vehicleregno: "",
+        groupmembers: "",
       };
       setLoading(true);
       await addAppointment(formData).then(() => {
         helpers.resetForm();
         setLoading(false);
+        getAllVisitors();
         handleClose();
         toast.success("Trip added successfully");
       });
@@ -88,7 +115,7 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
           <div className="w-full">
             <Formik
               initialValues={initialValues}
-              validationSchema={validationSchema}
+              // validationSchema={validationSchema}
               onSubmit={handleAddAppointment}
             >
               <Form className="w-full">

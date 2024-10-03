@@ -9,6 +9,7 @@ export async function POST(req) {
 
     const payload = {
         api_key,
+        ...body
     }
 
     console.log("PAYLOAD ",payload);

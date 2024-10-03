@@ -14,7 +14,7 @@ export const API_URL = {
 
     /***************** VISITORS APIS **********************/
     FETCH_VISITS: 'https://visitrack.thinksynergyltd.com/api1/rest/get_visitors.php',
-    ADD_APPOINTMENT: 'https://visitrackkreative.thinksynergyltd.com/api1/rest/create_visit.php'
+    ADD_APPOINTMENT: 'https://visitrack.thinksynergyltd.com/api1/rest/create_visit.php'
    
 
 }

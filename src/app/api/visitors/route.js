@@ -10,8 +10,6 @@ export async function POST(req) {
     const payload = {
         api_key,
     }
-
-    console.log("PAYLOAD ",payload);
     
     const config = {
       headers: {
