@@ -15,6 +15,8 @@ import Tabs from "./trips-tab";
 import { current } from "@reduxjs/toolkit";
 import OpenTrips from "./open-trips";
 import ClosedTrips from "./closed-trips";
+import Popover from "@mui/material/Popover";
+import SearchVehicle from "./search-vehicle";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -22,17 +24,9 @@ const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
 
 const Trips = () => {
   const { trips } = useSelector((store: any) => store.trip);
-  const [open, setOpen] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const type = "trips";
 
@@ -50,19 +44,9 @@ const Trips = () => {
 
   return (
     <div>
-      <div className="flex justify-end">
-        <button
-          onClick={handleClickOpen}
-          className="text-center text-white bg-primary py-2 px-4 rounded text-xs mb-1"
-        >
-          Add Trip
-        </button>
+      <div className="flex justify-end mb-1">
+        <SearchVehicle />
       </div>
-      <CreateTripModal
-        open={open}
-        setOpen={setOpen}
-        handleClose={handleClose}
-      />
       <Tabs {...{ currentTab, setCurrentTab }} />
 
       {currentTab === 0 && (

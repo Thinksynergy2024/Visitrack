@@ -8,8 +8,8 @@ export const API_URL = {
 
     /***************** TRIPS APIS **********************/
     FETCH_TRIPS: 'https://visitrack.thinksynergyltd.com/api1/rest/get_trips.php',
-    ADD_TRIP: ' https://visitrackkreative.thinksynergyltd.com/api1/rest/create_trip.php',
-    SEARCH_VEHICLE: ' https://visitrackkreative.thinksynergyltd.com/api1/rest/getvehicle.php',
+    ADD_TRIP: 'https://visitrack.thinksynergyltd.com/api1/rest/create_trip.php',
+    SEARCH_VEHICLE: 'https://visitrack.thinksynergyltd.com/api1/rest/getvehicle.php',
 
 
     /***************** VISITORS APIS **********************/

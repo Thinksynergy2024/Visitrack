@@ -5,21 +5,33 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { addTrip } from "@/app/redux/service/trips";
+import { addTrip, fetchTrips } from "@/app/redux/service/trips";
+import { setTrips, setVehicles } from "@/app/redux/features/trips";
 
 interface CreateTripModalProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
+  openModal: boolean;
+  setOpenModal: (open: boolean) => void;
   handleClose: () => void;
+  vehicle: any;
+  handleClosePopOver: () => void;
 }
 
 const CreateTripModal: React.FC<CreateTripModalProps> = ({
-  open,
-  setOpen,
+  openModal,
+  setOpenModal,
   handleClose,
+  handleClosePopOver,
+  vehicle,
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  const type = "trips";
+
+  const getAllTrips = async () => {
+    const res = await fetchTrips(type);
+    dispatch(setTrips(res));
+  };
 
   const initialValues = {
     drivername: "",
@@ -29,6 +41,7 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
     exitnotes: "",
     sealnumber: "",
     noofboxes: "",
+    accountid: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -41,31 +54,50 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
     noofboxes: Yup.number().required("This field is required!"),
   });
 
-  const handleAddMeasurement = async (
+  const handleAddTrip = async (
     formValue: typeof initialValues,
     helpers: any
   ) => {
     try {
       const formData = {
-        ...formValue,
+        json: JSON.stringify({
+          "drivername": formValue.drivername,
+          "turnboy": formValue.turnboy,
+          "exitmileage": formValue.exitmileage.toString(),
+          "destination": formValue.destination,
+          "exitnotes": `Entered by ${formValue.exitnotes}`,
+          "sealnumber": formValue.sealnumber,
+          "noofboxes": formValue.noofboxes.toString(),
+          "accountid": vehicle[0]?.accountid?.toString() || ""
+        })
       };
+  
       setLoading(true);
-      await addTrip(formData).then(() => {
-        helpers.resetForm();
-        setLoading(false);
-        handleClose();
-        toast.success("Trip added successfully");
-      });
+  
+      // Await the trip addition
+      await addTrip(formData);
+  
+      // Reset the form and close modals
+      helpers.resetForm();
+      handleClose();
+      handleClosePopOver();
+      dispatch(setVehicles([]));
+      getAllTrips();
+      toast.success("Trip added successfully");
     } catch (err) {
-      console.log("USER_ERROR ", err);
+      console.log("USER_ERROR", err);
+      toast.error("Failed to add trip");
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   return (
     <Dialog
       fullWidth
       maxWidth="sm"
-      open={open}
+      open={openModal}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
@@ -76,7 +108,7 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={handleAddMeasurement}
+              onSubmit={handleAddTrip}
             >
               <Form className="w-full">
                 <div className="flex items-center justify-between gap-4">
@@ -87,11 +119,7 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
                         type="text"
                         placeholder="Driver Name"
                         name="drivername"
-                      />
-                      <ErrorMessage
-                        name="drivername"
-                        component="div"
-                        className="text-warning text-xs"
+                        required
                       />
                     </div>
                     <div>
@@ -100,11 +128,7 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
                         type="text"
                         placeholder="Turn boy"
                         name="turnboy"
-                      />
-                      <ErrorMessage
-                        name="turnboy"
-                        component="div"
-                        className="text-warning text-xs"
+                        required
                       />
                     </div>
                   </section>
@@ -115,11 +139,7 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
                         type="text"
                         placeholder="Exit Mileage"
                         name="exitmileage"
-                      />
-                      <ErrorMessage
-                        name="exitmileage"
-                        component="div"
-                        className="text-warning text-xs"
+                        required
                       />
                     </div>
                     <div>
@@ -128,11 +148,7 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
                         type="text"
                         placeholder="Destination"
                         name="destination"
-                      />
-                      <ErrorMessage
-                        name="destination"
-                        component="div"
-                        className="text-warning text-xs"
+                        required
                       />
                     </div>
                   </section>
@@ -142,13 +158,9 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
                     <Field
                       className="block border border-gray py-2 text-sm rounded px-4 focus:outline-none w-full"
                       type="text"
-                      placeholder="Exit Notes"
-                      name="exitnotes"
-                    />
-                    <ErrorMessage
-                      name="exitnotes"
-                      component="div"
-                      className="text-warning text-xs"
+                      placeholder="No. of Boxes"
+                      name="noofboxes"
+                      required
                     />
                   </div>
                   <div className="w-full">
@@ -157,11 +169,7 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
                       type="text"
                       placeholder="Seal Number"
                       name="sealnumber"
-                    />
-                    <ErrorMessage
-                      name="sealnumber"
-                      component="div"
-                      className="text-warning text-xs"
+                      required
                     />
                   </div>
                 </section>
@@ -170,13 +178,10 @@ const CreateTripModal: React.FC<CreateTripModalProps> = ({
                     <Field
                       className="block border border-gray py-2 text-sm rounded px-4 focus:outline-none w-full"
                       type="text"
-                      placeholder="No. of Boxes"
-                      name="noofboxes"
-                    />
-                    <ErrorMessage
-                      name="noofboxes"
-                      component="div"
-                      className="text-warning text-xs"
+                      placeholder="Exit Notes"
+                      name="exitnotes"
+                      as="textarea"
+                      required
                     />
                   </div>
                 </section>

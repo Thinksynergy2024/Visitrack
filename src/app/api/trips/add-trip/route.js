@@ -1,5 +1,5 @@
-import { API_URL } from '../../../components/assets/api-endpoints';
-import { backendAxiosInstance } from "../../../components/assets/hooks/backend-axios-instance";
+import { API_URL } from '../../../../components/assets/api-endpoints';
+import { backendAxiosInstance } from "../../../../components/assets/hooks/backend-axios-instance";
 
 // For handling POST requests in Next.js 13+ using the app folder structure
 export async function POST(req) {
