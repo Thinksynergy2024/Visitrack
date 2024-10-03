@@ -58,7 +58,7 @@ const Visitors = () => {
         showRowLines={true}
         wordWrapEnabled={true}
         className="shadow-xl w-full"
-        height={"76vh"}
+        height={"84vh"}
       >
         <HeaderFilter visible={true} />
         <Pager

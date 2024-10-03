@@ -10,12 +10,9 @@ import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTrips } from "../../redux/service/trips";
 import { setTrips } from "@/app/redux/features/trips";
-import CreateTripModal from "./create-trip-modal";
 import Tabs from "./trips-tab";
-import { current } from "@reduxjs/toolkit";
 import OpenTrips from "./open-trips";
 import ClosedTrips from "./closed-trips";
-import Popover from "@mui/material/Popover";
 import SearchVehicle from "./search-vehicle";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {

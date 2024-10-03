@@ -8,74 +8,16 @@ import {
 } from "devextreme-react/data-grid";
 import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
-import { setVisitors } from "@/app/redux/features/visitors";
-import { fetchVisits } from "@/app/redux/service/visitors";
-import CreateAppointmentModal from "./create-appointment-modal";
-import { MdAdd } from "react-icons/md";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
 
-const Appointments = () => {
-  const { visits } = useSelector((store: any) => store.visitors);
-  const [open, setOpen] = React.useState(false);
-  const dispatch = useDispatch();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  // filter appointments
-  const appointments = visits.filter((visit: any) => visit.appointment === "1");
-
-  const sanitizeJson = (jsonString: "") => {
-    return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove control characters
-  };
-
-  const getAllVisitors = async () => {
-    try {
-      const res = await fetchVisits();
-      const sanitizedResponse = sanitizeJson(res);
-
-      // Attempt to parse the sanitized JSON string
-      const visitorsData = JSON.parse(sanitizedResponse);
-      dispatch(setVisitors(visitorsData));
-    } catch (error) {
-      console.error("Failed to fetch visitors:", error);
-      // You can also display a user-friendly error message here
-    }
-  };
-
-  useEffect(() => {
-    if (visits.length === 0) {
-      getAllVisitors();
-    } else {
-    }
-  }, []);
-
+const Trips = () => {
   return (
-    <section>
-      <div className="flex justify-end">
-        <button
-          onClick={handleClickOpen}
-          className="text-center text-white bg-primary py-2 px-4 rounded text-xs mb-1 flex items-center gap-1"
-        >
-          <MdAdd className="text-xl" />
-          Add Appointment
-        </button>
-      </div>
-      <CreateAppointmentModal
-        open={open}
-        setOpen={setOpen}
-        handleClose={handleClose}
-      />
+    <div>
       <DataGrid
-        dataSource={appointments}
+        // dataSource={trips}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
@@ -84,7 +26,7 @@ const Appointments = () => {
         showRowLines={true}
         wordWrapEnabled={true}
         className="shadow-xl w-full"
-        height={"75vh"}
+        // height={"72vh"}
       >
         <HeaderFilter visible={true} />
         <Pager
@@ -95,13 +37,13 @@ const Appointments = () => {
         />
         <Paging defaultPageSize={50} />
         <Column
-          dataField="visitorname"
+          dataField="exitdatetime"
           caption="Organisation"
           allowFiltering={false}
           width={180}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.visitorname}`}
+              {`${rowData.data.exitdatetime}`}
             </div>
           )}
           headerCellRender={() => (
@@ -115,19 +57,19 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Visitor Name
+              Created Time
             </div>
           )}
         />
         <Column
-          dataField="visitororigin"
+          dataField="drivername"
           caption="Driver Name"
           width={180}
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.visitororigin}`}
+              {`${rowData.data.drivername}`}
             </div>
           )}
           headerCellRender={() => (
@@ -141,20 +83,18 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Visitor Origin
+              Driver Name
             </div>
           )}
         />
         <Column
-          dataField="visitoridnumber"
+          dataField="turnboy"
           caption="Night Check Done"
           width={180}
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div
-              style={{ fontSize: "12px" }}
-            >{`${rowData.data.visitoridnumber}`}</div>
+            <div style={{ fontSize: "12px" }}>{`${rowData.data.turnboy}`}</div>
           )}
           headerCellRender={() => (
             <div
@@ -167,20 +107,18 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Visitor ID
+              Turnboy Name
             </div>
           )}
         />
         <Column
-          dataField="visitorstatus"
+          dataField="regno"
           caption="Night Check Missed"
           width={180}
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div
-              style={{ fontSize: "12px" }}
-            >{`${rowData.data.visitorstatus}`}</div>
+            <div style={{ fontSize: "12px" }}>{`${rowData.data.regno}`}</div>
           )}
           headerCellRender={() => (
             <div
@@ -193,45 +131,19 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Visitor Status
+              Reg. Number
             </div>
           )}
         />
         <Column
-          dataField="visitorphonenumber"
-          caption="Night Check Missed"
-          width={180}
-          alignment="left"
-          allowFiltering={false}
-          cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.visitorphonenumber}`}
-            </div>
-          )}
-          headerCellRender={() => (
-            <div
-              style={{
-                fontSize: "12px",
-                display: "flex",
-                flexDirection: "column-reverse",
-                alignItems: "flex-start",
-                height: "14%",
-                lineHeight: "1.2",
-              }}
-            >
-              Phone Number
-            </div>
-          )}
-        />
-        <Column
-          dataField="persontovisit"
+          dataField="exitmileage"
           caption="Night Check Missed"
           width={180}
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.persontovisit}`}
+              {`${rowData.data.exitmileage}`}
             </div>
           )}
           headerCellRender={() => (
@@ -245,19 +157,19 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Person to visit
+              Exit Mileage
             </div>
           )}
         />
         <Column
-          dataField="visitoritemsdescription"
+          dataField="destination"
           caption="Night Check Missed"
           width={180}
           alignment="left"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.visitoritemsdescription}`}
+              {`${rowData.data.destination}`}
             </div>
           )}
           headerCellRender={() => (
@@ -271,19 +183,19 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Item Description
+              Destination
             </div>
           )}
         />
         <Column
-          dataField="datecheckedin"
+          dataField="sealnumber"
           caption="Night Check Missed"
           width={180}
-          alignment="left"
+          alignment="right"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.datecheckedin}`}
+              {`${rowData.data.sealnumber}`}
             </div>
           )}
           headerCellRender={() => (
@@ -297,19 +209,19 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Date Checked In
+              Seal Number
             </div>
           )}
         />
         <Column
-          dataField="timecheckedin"
+          dataField="noofboxes"
           caption="Night Check Missed"
           width={180}
-          alignment="left"
+          alignment="right"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.timecheckedin}`}
+              {`${rowData.data.noofboxes}`}
             </div>
           )}
           headerCellRender={() => (
@@ -323,67 +235,19 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Time Checked In
+              Number of Boxes
             </div>
           )}
         />
         <Column
-          dataField="activity"
+          dataField="entrymileage"
           caption="Night Check Missed"
           width={180}
-          alignment="left"
-          allowFiltering={false}
-          cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>{`${rowData.data.activity}`}</div>
-          )}
-          headerCellRender={() => (
-            <div
-              style={{
-                fontSize: "12px",
-                display: "flex",
-                flexDirection: "column-reverse",
-                alignItems: "flex-start",
-                height: "14%",
-                lineHeight: "1.2",
-              }}
-            >
-              Activity
-            </div>
-          )}
-        />
-        <Column
-          dataField="location"
-          caption="Night Check Missed"
-          width={180}
-          alignment="left"
-          allowFiltering={false}
-          cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>{`${rowData.data.location}`}</div>
-          )}
-          headerCellRender={() => (
-            <div
-              style={{
-                fontSize: "12px",
-                display: "flex",
-                flexDirection: "column-reverse",
-                alignItems: "flex-start",
-                height: "14%",
-                lineHeight: "1.2",
-              }}
-            >
-              Location
-            </div>
-          )}
-        />
-        <Column
-          dataField="date_start"
-          caption="Night Check Missed"
-          width={180}
-          alignment="left"
+          alignment="right"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.date_start}`}
+              {`${rowData.data.entrymileage}`}
             </div>
           )}
           headerCellRender={() => (
@@ -397,19 +261,66 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Start Date
+              Entry Mileage
             </div>
           )}
         />
         <Column
-          dataField="time_start"
+          dataField="nightcheckmissed"
           caption="Night Check Missed"
           width={180}
-          alignment="left"
+          alignment="right"
+          allowFiltering={false}
+          // cellRender={(rowData) => (
+          //   <div style={{ fontSize: "12px" }}>
+          //     {`${rowData.data.entrymileage}`}
+          //   </div>
+          // )}
+          headerCellRender={() => (
+            <div
+              style={{
+                fontSize: "12px",
+                display: "flex",
+                flexDirection: "column-reverse",
+                alignItems: "flex-start",
+                height: "14%",
+                lineHeight: "1.2",
+              }}
+            >
+              Total Distance
+            </div>
+          )}
+        />
+        <Column
+          dataField="nightcheckmissed"
+          caption="Night Check Missed"
+          width={180}
+          alignment="right"
+          allowFiltering={false}
+          headerCellRender={() => (
+            <div
+              style={{
+                fontSize: "12px",
+                display: "flex",
+                flexDirection: "column-reverse",
+                alignItems: "flex-start",
+                height: "14%",
+                lineHeight: "1.2",
+              }}
+            >
+              Assigned To
+            </div>
+          )}
+        />
+        <Column
+          dataField="exitnotes"
+          caption="Night Check Missed"
+          width={180}
+          alignment="right"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.time_start}`}
+              {`${rowData.data.exitnotes}`}
             </div>
           )}
           headerCellRender={() => (
@@ -423,43 +334,19 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Start Time
+              Exit Notes
             </div>
           )}
         />
         <Column
-          dataField="status"
+          dataField="entrydate"
           caption="Night Check Missed"
           width={180}
-          alignment="left"
-          allowFiltering={false}
-          cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>{`${rowData.data.status}`}</div>
-          )}
-          headerCellRender={() => (
-            <div
-              style={{
-                fontSize: "12px",
-                display: "flex",
-                flexDirection: "column-reverse",
-                alignItems: "flex-start",
-                height: "14%",
-                lineHeight: "1.2",
-              }}
-            >
-              Status
-            </div>
-          )}
-        />
-        <Column
-          dataField="appointment_date"
-          caption="Night Check Missed"
-          width={180}
-          alignment="left"
+          alignment="right"
           allowFiltering={false}
           cellRender={(rowData) => (
             <div style={{ fontSize: "12px" }}>
-              {`${rowData.data.appointment_date}`}
+              {`${rowData.data.entrydate}`}
             </div>
           )}
           headerCellRender={() => (
@@ -473,18 +360,20 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Appointment Date
+              Entry Date
             </div>
           )}
         />
         <Column
-          dataField="priority"
+          dataField="entrytime"
           caption="Night Check Missed"
           width={180}
-          alignment="left"
+          alignment="right"
           allowFiltering={false}
           cellRender={(rowData) => (
-            <div style={{ fontSize: "12px" }}>{`${rowData.data.priority}`}</div>
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.entrytime}`}
+            </div>
           )}
           headerCellRender={() => (
             <div
@@ -497,13 +386,39 @@ const Appointments = () => {
                 lineHeight: "1.2",
               }}
             >
-              Priority
+              Entry Time
+            </div>
+          )}
+        />
+        <Column
+          dataField="entrynotes"
+          caption="Night Check Missed"
+          width={180}
+          alignment="right"
+          allowFiltering={false}
+          cellRender={(rowData) => (
+            <div style={{ fontSize: "12px" }}>
+              {`${rowData.data.entrynotes}`}
+            </div>
+          )}
+          headerCellRender={() => (
+            <div
+              style={{
+                fontSize: "12px",
+                display: "flex",
+                flexDirection: "column-reverse",
+                alignItems: "flex-start",
+                height: "14%",
+                lineHeight: "1.2",
+              }}
+            >
+              Entry Notes
             </div>
           )}
         />
       </DataGrid>
-    </section>
+    </div>
   );
 };
 
-export default Appointments;
+export default Trips;

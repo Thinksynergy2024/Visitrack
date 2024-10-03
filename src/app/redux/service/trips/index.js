@@ -27,6 +27,7 @@ export const addTrip = (accountid,drivername,turnboy,exitmileage,destination,exi
     })
 }
 
+
 export const searchVehicle = (regno,type) =>{
     const axiosInstance = UseAxios();
     return new Promise((resolve,reject) =>{

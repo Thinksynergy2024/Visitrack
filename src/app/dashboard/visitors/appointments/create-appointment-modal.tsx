@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { addTrip } from "@/app/redux/service/trips";
+import { addAppointment } from "@/app/redux/service/visitors";
 
 interface CreateAppointmentModalProps {
   open: boolean;
@@ -22,35 +22,48 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
   const dispatch = useDispatch();
 
   const initialValues = {
-    drivername: "",
-    turnboy: "",
-    exitmileage: "",
-    destination: "",
-    exitnotes: "",
-    sealnumber: "",
-    noofboxes: "",
+    visitorname: "",
+    visitororigin: "",
+    visitoridnumber: "",
+    visitorphonenumber: "",
+    date_start: "",
+    time_start: "",
+    groupsize: "",
+    visitoritems: "",
+    visitorstatus: "",
+    subject: "",
+    visitoritemssno: "",
+    persontovisit: "",
+    typeofvisit: "",
+    vehicleregno: "",
+    groupmembers: "",
   };
 
   const validationSchema = Yup.object().shape({
-    drivername: Yup.string().required("This field is required!"),
-    turnboy: Yup.string().required("This field is required!"),
-    exitmileage: Yup.number().required("This field is required!"),
-    destination: Yup.string().required("This field is required!"),
-    exitnotes: Yup.string().required("This field is required!"),
-    sealnumber: Yup.string().required("This field is required!"),
-    noofboxes: Yup.number().required("This field is required!"),
+    visitorname: Yup.string().required("This field is required!"),
+    visitororigin: Yup.string().required("This field is required!"),
+    visitoridnumber: Yup.number().required("This field is required!"),
+    visitorphonenumber: Yup.string().required("This field is required!"),
+    date_start: Yup.string().required("This field is required!"),
+    time_start: Yup.string().required("This field is required!"),
   });
 
-  const handleAddMeasurement = async (
+  const handleAddAppointment = async (
     formValue: typeof initialValues,
     helpers: any
   ) => {
     try {
       const formData = {
         ...formValue,
+        activity: "appointment",
+        activitydetails: "appointment",
+        location: "kreative",
+        subject: "appointment",
+        typeofvisit: "appointment",
+        appointment: "1",
       };
       setLoading(true);
-      await addTrip(formData).then(() => {
+      await addAppointment(formData).then(() => {
         helpers.resetForm();
         setLoading(false);
         handleClose();
@@ -76,7 +89,7 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={handleAddMeasurement}
+              onSubmit={handleAddAppointment}
             >
               <Form className="w-full">
                 <div className="flex items-center justify-between gap-4">
@@ -85,26 +98,18 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
                       <Field
                         className="block border border-gray py-2 text-sm rounded px-4 focus:outline-none w-full"
                         type="text"
-                        placeholder="Driver Name"
-                        name="drivername"
-                      />
-                      <ErrorMessage
-                        name="drivername"
-                        component="div"
-                        className="text-warning text-xs"
+                        placeholder="Visitor Name"
+                        name="visitorname"
+                        required
                       />
                     </div>
                     <div>
                       <Field
                         className="block border rounded text-sm border-gray py-2 px-4 focus:outline-none w-full"
                         type="text"
-                        placeholder="Turn boy"
-                        name="turnboy"
-                      />
-                      <ErrorMessage
-                        name="turnboy"
-                        component="div"
-                        className="text-warning text-xs"
+                        placeholder="Visitor Origin"
+                        name="visitororigin"
+                        required
                       />
                     </div>
                   </section>
@@ -113,26 +118,17 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
                       <Field
                         className="block border border-gray py-2 text-sm rounded px-4 focus:outline-none w-full"
                         type="text"
-                        placeholder="Exit Mileage"
-                        name="exitmileage"
-                      />
-                      <ErrorMessage
-                        name="exitmileage"
-                        component="div"
-                        className="text-warning text-xs"
+                        placeholder="ID No."
+                        name="visitoridnumber"
+                        required
                       />
                     </div>
                     <div>
                       <Field
                         className="block border rounded text-sm border-gray py-2 px-4 focus:outline-none w-full"
                         type="text"
-                        placeholder="Destination"
-                        name="destination"
-                      />
-                      <ErrorMessage
-                        name="destination"
-                        component="div"
-                        className="text-warning text-xs"
+                        placeholder="Phone No."
+                        name="visitorphonenumber"
                       />
                     </div>
                   </section>
@@ -141,42 +137,17 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
                   <div className="w-full">
                     <Field
                       className="block border border-gray py-2 text-sm rounded px-4 focus:outline-none w-full"
-                      type="text"
-                      placeholder="Exit Notes"
-                      name="exitnotes"
-                    />
-                    <ErrorMessage
-                      name="exitnotes"
-                      component="div"
-                      className="text-warning text-xs"
+                      type="date"
+                      placeholder="Start Date"
+                      name="date_start"
                     />
                   </div>
                   <div className="w-full">
                     <Field
                       className="block border rounded text-sm border-gray py-2 px-4 focus:outline-none w-full"
                       type="text"
-                      placeholder="Seal Number"
-                      name="sealnumber"
-                    />
-                    <ErrorMessage
-                      name="sealnumber"
-                      component="div"
-                      className="text-warning text-xs"
-                    />
-                  </div>
-                </section>
-                <section className="">
-                  <div className="w-full">
-                    <Field
-                      className="block border border-gray py-2 text-sm rounded px-4 focus:outline-none w-full"
-                      type="text"
-                      placeholder="No. of Boxes"
-                      name="noofboxes"
-                    />
-                    <ErrorMessage
-                      name="noofboxes"
-                      component="div"
-                      className="text-warning text-xs"
+                      placeholder="Start Time"
+                      name="time_start"
                     />
                   </div>
                 </section>
@@ -210,7 +181,7 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
                         />
                       </svg>
                     )}
-                    Create Appointment
+                    Add Appointment
                   </button>
                 </section>
               </Form>
