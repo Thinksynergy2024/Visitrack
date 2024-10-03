@@ -7,9 +7,10 @@ import {
   HeaderFilter,
 } from "devextreme-react/data-grid";
 import dynamic from "next/dynamic";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setVisitors } from "@/app/redux/features/visitors";
 import { fetchVisits } from "@/app/redux/service/visitors";
+import CreateAppointmentModal from "./create-appointment-modal";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -17,20 +18,29 @@ const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
 
 const Appointments = () => {
   const { visits } = useSelector((store: any) => store.visitors);
+  const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
-  
-  // filter appointments
-  const appointments = visits.filter((visit:any) => visit.appointment === '1')
 
-  const sanitizeJson = (jsonString: '') => {
-    return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, ''); // Remove control characters
+  const handleClickOpen = () => {
+    setOpen(true);
   };
-  
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // filter appointments
+  const appointments = visits.filter((visit: any) => visit.appointment === "1");
+
+  const sanitizeJson = (jsonString: "") => {
+    return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove control characters
+  };
+
   const getAllVisitors = async () => {
     try {
       const res = await fetchVisits();
       const sanitizedResponse = sanitizeJson(res);
-      
+
       // Attempt to parse the sanitized JSON string
       const visitorsData = JSON.parse(sanitizedResponse);
       dispatch(setVisitors(visitorsData));
@@ -48,7 +58,20 @@ const Appointments = () => {
   }, []);
 
   return (
-    <div>
+    <section>
+      <div className="flex justify-end">
+        <button
+          onClick={handleClickOpen}
+          className="text-center text-white bg-primary py-2 px-4 rounded text-xs mb-1"
+        >
+          Create Appointment
+        </button>
+      </div>
+      <CreateAppointmentModal
+        open={open}
+        setOpen={setOpen}
+        handleClose={handleClose}
+      />
       <DataGrid
         dataSource={appointments}
         allowColumnReordering={true}
@@ -59,7 +82,7 @@ const Appointments = () => {
         showRowLines={true}
         wordWrapEnabled={true}
         className="shadow-xl w-full"
-        height={"84vh"}
+        height={"75vh"}
       >
         <HeaderFilter visible={true} />
         <Pager
@@ -477,7 +500,7 @@ const Appointments = () => {
           )}
         />
       </DataGrid>
-    </div>
+    </section>
   );
 };
 
