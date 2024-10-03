@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   trips: [],
+  vehicles: [],
 };
 
 const TripSlice = createSlice({
@@ -12,12 +13,16 @@ const TripSlice = createSlice({
     setTrips: (state, action) => {
       state.trips = action.payload;
     },
+    setVehicles: (state, action) => {
+      state.vehicles = action.payload;
+    },
     
   },
 });
 
 export const {
   setTrips,
+  setVehicles
 } = TripSlice.actions;
 
 
