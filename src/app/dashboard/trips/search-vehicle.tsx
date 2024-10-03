@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 import { setVehicles } from "@/app/redux/features/trips";
 import Popover from "@mui/material/Popover";
 import CreateTripModal from "./create-trip-modal";
+import { MdAdd } from "react-icons/md";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
@@ -19,7 +20,7 @@ const SearchVehicle = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openModal,setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleClickOpen = () => {
     setOpenModal(true);
@@ -66,7 +67,7 @@ const SearchVehicle = () => {
       // If searchVehicle is successful, dispatch the results and reset form
       dispatch(setVehicles(res));
       helpers.resetForm();
-      toast.success("Operation completed successfully");
+      toast.success("vehicle retrieved successfully");
     } catch (err) {
       console.log("USER_ERROR", err);
       toast.error("Failed to search for vehicle");
@@ -79,8 +80,9 @@ const SearchVehicle = () => {
     <section>
       <button
         onClick={handleClickPopOver}
-        className="bg-primary px-4 py-2 rounded text-xs text-white"
+        className="bg-primary px-4 py-2 rounded text-xs text-white flex items-center gap-2"
       >
+        <MdAdd className="text-xl" />
         Add Trip
       </button>
       <Popover
@@ -108,7 +110,6 @@ const SearchVehicle = () => {
                   name="regno"
                   required
                 />
-                
               </div>
               <div>
                 <button
@@ -158,7 +159,10 @@ const SearchVehicle = () => {
               <p>{vehicle[0]?.driver}</p>
             </div>
             <hr className="text-gray my-1" />
-            <button onClick={handleClickOpen} className="bg-primary text-white rounded px-4 py-2 text-xs w-full">
+            <button
+              onClick={handleClickOpen}
+              className="bg-primary text-white rounded px-4 py-2 text-xs w-full"
+            >
               Add Trip
             </button>
             <CreateTripModal
