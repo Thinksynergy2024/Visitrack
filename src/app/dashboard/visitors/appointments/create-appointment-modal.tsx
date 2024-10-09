@@ -94,7 +94,7 @@ const CreateAppointmentModal: React.FC<CreateAppointmentModalProps> = ({
         setLoading(false);
         getAllVisitors();
         handleClose();
-        toast.success("Trip added successfully");
+        toast.success("Appointment added successfully");
       });
     } catch (err) {
       console.log("USER_ERROR ", err);
