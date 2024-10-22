@@ -53,6 +53,51 @@ const CustomizedHeader = () => {
         ) : (
           ""
         )}
+        {currentPath === "/dashboard/reports" ? (
+          <h1 className="font-bold">Reports</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/visitors/all-visitors" ? (
+          <h1 className="font-bold">All Visitors</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/visitors/visitors-left" ? (
+          <h1 className="font-bold">Visitors who have left</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/appointments/all-appointments" ? (
+          <h1 className="font-bold">All Appointments</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/appointments/complete-appointments" ? (
+          <h1 className="font-bold">Complete Appointments</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/appointments/upcoming-appointments" ? (
+          <h1 className="font-bold">Upcoming Appointments</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/trips/all-trips" ? (
+          <h1 className="font-bold">All Trips</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/trips/complete-trips" ? (
+          <h1 className="font-bold">Complete Trips</h1>
+        ) : (
+          ""
+        )}
+        {currentPath === "/dashboard/reports/trips/ongoing-trips" ? (
+          <h1 className="font-bold">Ongoing Trips</h1>
+        ) : (
+          ""
+        )}
       </div>
       <div>
       <div className="flex items-center gap-2">
