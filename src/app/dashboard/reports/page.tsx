@@ -18,14 +18,14 @@ const Reports = () => {
       </section>
       <section className="bg-white shadow px-4 py-3 text-xs rounded-bl rounded-br flex items-center justify-between">
         <div className="space-y-4">
-          <Link className="block" href={'/dashboard/reports/visitors/all-visitors'}>All visitors</Link>
-          <Link className="block" href={'/dashboard/reports/visitors/visitors-left'}>All visitors who have left the site</Link>
-          <Link className="block" href={'/dashboard/reports/appointments/all-appointments'}>All Appointments</Link>
-          <Link className="block" href={'/dashboard/reports/appointments/complete-appointments'}>Complete Appointments</Link>
-          <Link className="block" href={'/dashboard/reports/appointments/upcoming-appointments'}>Upcoming Appointments</Link>
-          <Link className="block" href={'/dashboard/reports/trips/all-trips'}>All Trips</Link>
-          <Link className="block" href={'/dashboard/reports/trips/ongoing-trips'}>Ongoing Trips</Link>
-          <Link className="block" href={'/dashboard/reports/trips/complete-trips'}>Complete Trips</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/visitors/all-visitors'}>All visitors</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/visitors/visitors-left'}>All visitors who have left the site</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/appointments/all-appointments'}>All Appointments</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/appointments/complete-appointments'}>Complete Appointments</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/appointments/upcoming-appointments'}>Upcoming Appointments</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/trips/all-trips'}>All Trips</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/trips/ongoing-trips'}>Ongoing Trips</Link>
+          <Link className="block hover:font-bold" href={'/dashboard/reports/trips/complete-trips'}>Complete Trips</Link>
         </div>
         <div className="space-y-4">
           <p>Visitor Management</p>

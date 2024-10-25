@@ -48,13 +48,17 @@ const VisitorsLeft = () => {
     }
   }, []);
 
+
+  // filter visitors who have left
+  const leftVisitors = Array.isArray(visits) && visits.filter((visit) => visit.visitorstatus === 'Out');
+
   return (
     <div>
       {loading ? (
         <Loading />
       ) : (
         <DataGrid
-          dataSource={visits}
+          dataSource={leftVisitors}
           allowColumnReordering={true}
           rowAlternationEnabled={true}
           showBorders={true}

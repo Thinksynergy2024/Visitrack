@@ -48,13 +48,15 @@ const AllAppointments = () => {
     }
   }, []);
 
+  const appointments = visits.filter((visit) => visit.appointment === "1");
+
   return (
     <div>
       {loading ? (
         <Loading />
       ) : (
         <DataGrid
-          dataSource={visits}
+          dataSource={appointments}
           allowColumnReordering={true}
           rowAlternationEnabled={true}
           showBorders={true}

@@ -48,13 +48,20 @@ const UpcomingAppointments = () => {
     }
   }, []);
 
+  const upcomingAppointments = Array.isArray(visits) && visits.filter(
+    (visit) =>
+      visit.status === "Started" &&
+      visit.appointment === "1" &&
+      visit.visitorstatus === ""
+  );
+
   return (
     <div>
       {loading ? (
         <Loading />
       ) : (
         <DataGrid
-          dataSource={visits}
+          dataSource={upcomingAppointments}
           allowColumnReordering={true}
           rowAlternationEnabled={true}
           showBorders={true}

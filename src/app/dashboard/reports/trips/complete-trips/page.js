@@ -42,6 +42,9 @@ const CompleteTrips = () => {
     }
   }, []);
 
+  // filter complete trips
+  const completeTrips = Array.isArray(trips) && trips.filter((trip) => trip.entrymileage !== "")
+
   return (
     <div>
       {loading ? (
@@ -54,7 +57,7 @@ const CompleteTrips = () => {
           {/* <Tabs {...{ currentTab, setCurrentTab }} /> */}
           {currentTab === 0 && (
             <DataGrid
-              dataSource={trips}
+              dataSource={completeTrips}
               // allowColumnReordering={true}
               // rowAlternationEnabled={true}
               showBorders={true}
