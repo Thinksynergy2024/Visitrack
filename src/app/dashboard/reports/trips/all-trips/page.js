@@ -8,20 +8,20 @@ import {
 } from "devextreme-react/data-grid";
 import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTrips } from "../../redux/service/trips";
+import { fetchTrips } from "../../../../redux/service/trips";
 import { setTrips } from "@/app/redux/features/trips";
-import Tabs from "./trips-tab";
-import OpenTrips from "./open-trips";
-import ClosedTrips from "./closed-trips";
-import SearchVehicle from "./search-vehicle";
+// import Tabs from "../trips-tab";
+// import OpenTrips from "./open-trips";
+// import ClosedTrips from "./closed-trips";
+// import SearchVehicle from "./search-vehicle";
 import Loading from "@/components/assets/hoc/Loading";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
 
-const Trips = () => {
-  const { trips } = useSelector((store: any) => store.trip);
+const AllTrips = () => {
+  const { trips } = useSelector((store) => store.trip);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
@@ -48,22 +48,22 @@ const Trips = () => {
         <Loading />
       ) : (
         <>
-          <div className="flex justify-end mb-1">
+          {/* <div className="flex justify-end mb-1">
             <SearchVehicle />
-          </div>
-          <Tabs {...{ currentTab, setCurrentTab }} />
+          </div> */}
+          {/* <Tabs {...{ currentTab, setCurrentTab }} /> */}
           {currentTab === 0 && (
             <DataGrid
               dataSource={trips}
-              allowColumnReordering={true}
-              rowAlternationEnabled={true}
+              // allowColumnReordering={true}
+              // rowAlternationEnabled={true}
               showBorders={true}
               remoteOperations={true}
               showColumnLines={true}
               showRowLines={true}
               wordWrapEnabled={true}
               className="shadow-xl w-full"
-              height={"72vh"}
+              height={"84vh"}
             >
               <HeaderFilter visible={true} />
               <Pager
@@ -460,12 +460,12 @@ const Trips = () => {
             </DataGrid>
           )}
 
-          {currentTab === 1 && <OpenTrips />}
-          {currentTab === 2 && <ClosedTrips />}
+          {/* {currentTab === 1 && <OpenTrips />}
+          {currentTab === 2 && <ClosedTrips />} */}
         </>
       )}
     </div>
   );
 };
 
-export default Trips;
+export default AllTrips;

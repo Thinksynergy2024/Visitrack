@@ -8,20 +8,20 @@ import {
 } from "devextreme-react/data-grid";
 import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchVisits } from "../../redux/service/visitors";
 import { setVisitors } from "@/app/redux/features/visitors";
 import Loading from "@/components/assets/hoc/Loading";
+import { fetchVisits } from "@/app/redux/service/visitors";
 
 const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
   ssr: false,
 });
 
-const Visitors = () => {
-  const { visits } = useSelector((store: any) => store.visitors);
+const VisitorsLeft = () => {
+  const { visits } = useSelector((store) => store.visitors);
   const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
 
-  const sanitizeJson = (jsonString: "") => {
+  const sanitizeJson = (jsonString) => {
     return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove control characters
   };
 
@@ -48,13 +48,17 @@ const Visitors = () => {
     }
   }, []);
 
+
+  // filter visitors who have left
+  const leftVisitors = Array.isArray(visits) && visits.filter((visit) => visit.visitorstatus === 'Out');
+
   return (
     <div>
       {loading ? (
         <Loading />
       ) : (
         <DataGrid
-          dataSource={visits}
+          dataSource={leftVisitors}
           allowColumnReordering={true}
           rowAlternationEnabled={true}
           showBorders={true}
@@ -492,4 +496,4 @@ const Visitors = () => {
   );
 };
 
-export default Visitors;
+export default VisitorsLeft;

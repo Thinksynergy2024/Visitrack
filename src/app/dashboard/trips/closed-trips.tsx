@@ -1,23 +1,27 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 import {
-  Column,
-  Paging,
-  Pager,
-  HeaderFilter,
-} from "devextreme-react/data-grid";
-import dynamic from "next/dynamic";
-import { useSelector, useDispatch } from "react-redux";
+    Column,
+    Paging,
+    Pager,
+    HeaderFilter,
+  } from "devextreme-react/data-grid";
+  import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
 
-const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
-  ssr: false,
-});
+  const DataGrid = dynamic(() => import("devextreme-react/data-grid"), {
+    ssr: false,
+  });
 
-const Trips = () => {
+const ClosedTrips = () => {
+  const { trips } = useSelector((store: any) => store.trip);
+
+  // filter open trips
+  const closedTrips = trips.filter((trip: any) => trip.entrydate !== '' && trip.entrymileage !== '');
+
   return (
-    <div>
+    <section>
       <DataGrid
-        // dataSource={trips}
+        dataSource={closedTrips}
         allowColumnReordering={true}
         rowAlternationEnabled={true}
         showBorders={true}
@@ -26,7 +30,7 @@ const Trips = () => {
         showRowLines={true}
         wordWrapEnabled={true}
         className="shadow-xl w-full"
-        // height={"72vh"}
+        height={"72vh"}
       >
         <HeaderFilter visible={true} />
         <Pager
@@ -417,8 +421,8 @@ const Trips = () => {
           )}
         />
       </DataGrid>
-    </div>
+    </section>
   );
 };
 
-export default Trips;
+export default ClosedTrips;
